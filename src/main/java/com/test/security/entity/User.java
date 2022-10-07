@@ -25,7 +25,11 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "USER_ID")
     Long id;
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 498e101719349a9764fc520e948ba3d2d9e9712a
     @Column
     String userName;
 
@@ -51,7 +55,10 @@ public class User implements UserDetails {
     public String getUsername() {
         return this.userName;
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 498e101719349a9764fc520e948ba3d2d9e9712a
     public String getUserName() {
         return this.userName;
     }
@@ -80,9 +87,17 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<GrantedAuthority> roles = new HashSet<>();
         // for (String role : this.role.split(",")) {
+<<<<<<< HEAD
         // roles.add(new SimpleGrantedAuthority(role));
         // }
         return roles;
     }
+=======
+        //     roles.add(new SimpleGrantedAuthority(role));
+        // }
+        return roles;
+    }
+    
+>>>>>>> 498e101719349a9764fc520e948ba3d2d9e9712a
 
 }
