@@ -30,9 +30,9 @@ public class UserController {
     }
 
     @GetMapping("/hello")
-    @ResponseBody
+    // @ResponseBody
     public String hello(@AuthenticationPrincipal UserDetails user) {
-        return user.getUsername();
+        return "hello";
     }
 
 }

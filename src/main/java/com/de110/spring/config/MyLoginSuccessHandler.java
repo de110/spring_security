@@ -15,10 +15,13 @@ public class MyLoginSuccessHandler implements AuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication)
             throws IOException, ServletException {
-        HttpSession session = request.getSession();
-
-        session.setAttribute("greeting", authentication.getName());
 
         response.sendRedirect("/hello");
     }
 }
+
+// DB saving test
+// MVC system mark out
+// AuthenticationPrincipal annotation ~> check DB saving
+// build vue front
+// check DB save in vue front env.

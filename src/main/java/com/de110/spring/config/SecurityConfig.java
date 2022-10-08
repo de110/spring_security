@@ -20,48 +20,9 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import com.de110.spring.service.UserService;
+
 import lombok.RequiredArgsConstructor;
-
-// @Configuration
-// @EnableWebSecurity(debug = true)
-// // @EnableGlobalMethodSecurity(prePostEnabled = true)
-// @ConditionalOnDefaultWebSecurity
-// @ConditionalOnWebApplication
-// @RequiredArgsConstructor
-// public class SecurityConfig {
-
-//     @Bean
-//     public PasswordEncoder passwordEncoder() {
-//         return new BCryptPasswordEncoder();
-//     }
-
-//     @Bean
-//     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//         http
-//                 .authorizeHttpRequests((requests) -> requests
-//                         .antMatchers("/", "/home").permitAll()
-//                         .anyRequest().authenticated())
-//                 .formLogin((form) -> form
-//                         .loginPage("/login")
-//                         .permitAll())
-//                 .logout((logout) -> logout.permitAll());
-
-//         return http.build();
-//     }
-
-//     @Bean
-//     public UserDetailsService userDetailsService() {
-//         UserDetails user = User
-//                 .withUsername("user")
-//                 .password(passwordEncoder().encode("password"))
-//                 .roles("USER")
-//                 .build();
-//         System.out.println(user.getPassword());
-
-//         return new InMemoryUserDetailsManager(user);
-//     }
-
-// }
 
 @Configuration
 @EnableWebSecurity
@@ -69,19 +30,16 @@ import lombok.RequiredArgsConstructor;
 @ConditionalOnWebApplication
 @RequiredArgsConstructor
 public class SecurityConfig {
-    // @Bean
-    // public UserDetailsService userDetailsServices() {
-    // return ;
-    // }
+
+    private final UserService userService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    // @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService());
+        auth.userDetailsService(userService);
     }
 
     @Bean
@@ -92,7 +50,9 @@ public class SecurityConfig {
                 .cors().and()
                 .authorizeHttpRequests()
                 .antMatchers("/", "/home").permitAll()
-                .anyRequest().authenticated()
+                .anyRequest()
+                .permitAll()
+                // .authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login").permitAll()
@@ -101,14 +61,4 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-        UserDetails user = User
-                .withUsername("user")
-                .password(passwordEncoder().encode("password"))
-                .roles("USER")
-                .build();
-
-        return new InMemoryUserDetailsManager(user);
-    }
 }
